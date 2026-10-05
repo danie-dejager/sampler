@@ -1,5 +1,5 @@
 # Sampler. Visualization for any shell command.
-[![Build Status](https://travis-ci.com/sqshq/sampler.svg?token=LdyRhxxjDFnAz1bJg8fq&branch=master)](https://travis-ci.com/sqshq/sampler) [![Go Report Card](https://goreportcard.com/badge/github.com/sqshq/sampler)](https://goreportcard.com/report/github.com/sqshq/sampler)
+[![CI](https://github.com/sqshq/sampler/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/sqshq/sampler/actions/workflows/ci.yml) [![Go Report Card](https://goreportcard.com/badge/github.com/sqshq/sampler)](https://goreportcard.com/report/github.com/sqshq/sampler)
 
 Sampler is a tool for shell commands execution, visualization and alerting. Configured with a simple YAML file.
 
@@ -11,6 +11,10 @@ One can sample any dynamic process right from the terminal — observe changes i
 If there is a way to get a metric using a shell command, then it can be visualized with Sampler momentarily.
 
 ## Installation
+
+The linked v1.1.0 release binaries predate the dependency updates in this source
+branch. Build this source tree or use the Docker build below to use the updated
+code; a new release is needed to refresh the published binaries.
 
 ### macOS
 
@@ -35,7 +39,7 @@ sudo chmod +x /usr/local/bin/sampler
 sudo wget https://github.com/sqshq/sampler/releases/download/v1.1.0/sampler-1.1.0-linux-amd64 -O /usr/local/bin/sampler
 sudo chmod +x /usr/local/bin/sampler
 ```
-Note: `libasound2-dev` system library is required to be installed for Sampler to play a [trigger](https://github.com/sqshq/sampler#triggers) sound tone. Usually the library is in place, but if not - you can install it with your favorite package manager, e.g `apt install libasound2-dev`
+Note: On Linux, ALSA sound playback may require the `libasound2` runtime library (for example, `sudo apt install libasound2` on Debian-based systems).
 #### Packaging status
 - [Fedora](https://apps.fedoraproject.org/packages/golang-github-sqshq-sampler) `sudo dnf install golang-github-sqshq-sampler` (F31+)
 - [Arch](https://aur.archlinux.org/packages/sampler) `yay -S sampler`
@@ -60,8 +64,20 @@ vim config.yml
 docker build --tag sampler .
 
 # Run a container
-docker run --interactive --tty --volume $(pwd)/config.yml:/root/config.yml sampler --config /root/config.yml
+docker run --interactive --tty --user "$(id -u):$(id -g)" --volume "$(pwd)/config.yml:/config.yml" sampler --config /config.yml
 ```
+
+## Security
+
+Sampler configurations are executable input. `sample`, `init`, `multistep-init`,
+`transform`, trigger `condition`, and trigger `actions.script` values are run
+with `sh -c` as the Sampler process, with its environment and filesystem
+permissions. Sampler does not sandbox these commands. Only use configurations
+you trust, and do not expose secrets to untrusted configurations.
+
+The Docker image runs as a non-root user by default, but this is not a sandbox:
+commands can still access mounted files and resources permitted by the container
+runtime.
 
 ## Usage
 You specify shell commands, Sampler executes them with a required rate. The output is used for visualization.
