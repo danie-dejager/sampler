@@ -1,8 +1,9 @@
+%global debug_package %{nil}
 %global commit 5da77618213bc6733efc1b585d8bbcbf1b486316
 
 Name:           sampler
 Version:        1.1.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Terminal dashboard for shell commands
 License:        GPL-3.0-or-later
 URL:            https://github.com/sqshq/sampler
@@ -39,3 +40,8 @@ install -Dpm0755 sampler %{buildroot}%{_bindir}/sampler
 %license LICENSE.md
 %doc README.md
 %{_bindir}/sampler
+
+%changelog
+* Mon Oct 05 2026 Danie de Jager <DdeJager@datacentrix.co.za> - 1.1.1-2
+- Disable the empty debug-source package for the Go binary.
+- Add a changelog entry for EPEL 10 reproducible-build policy.
