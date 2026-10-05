@@ -34,6 +34,21 @@ If there is a way to get a metric using a shell command, then it can be visualiz
 The linked v1.1.0 release binaries predate the dependency updates in this source
 tree. The project is archived, so refreshed release binaries are not planned.
 
+### Build from source
+
+To build the updated source tree, install Go 1.26 or later and run these
+commands from the repository root:
+
+```sh
+go test ./...
+go build .
+```
+
+Go produces `sampler` on Unix-like systems and `sampler.exe` on Windows. Run it
+with a configuration file you trust: `./sampler --config /path/to/config.yml`
+on Unix-like systems or `.\sampler.exe --config C:/path/to/config.yml` in
+PowerShell. See [Security](#security) before running third-party configurations.
+
 ### macOS
 
 [HomeBrew](https://brew.sh):
