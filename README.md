@@ -3,6 +3,25 @@
 
 Sampler is a tool for shell commands execution, visualization and alerting. Configured with a simple YAML file.
 
+## Project status
+
+Sampler is archived and no longer maintained. No further releases or security updates are
+planned. The linked v1.1.0 binaries predate the dependency updates in this source tree.
+
+## Alternatives
+
+There is no mature drop-in replacement I found. Depending on what you need, consider:
+
+- [tui-dashboard](https://github.com/lyuangg/tui-dashboard) is the closest feature match, with YAML-configured
+  shell sources and widgets. It is very new and GitHub does not list a license, so evaluate it carefully
+  before adopting it.
+- [Glances](https://github.com/nicolargo/glances) is an actively maintained system monitor with terminal
+  and web interfaces; it is not a general shell-command dashboard.
+- [bottom](https://github.com/ClementTsang/bottom) is an actively maintained terminal system monitor,
+  focused on system resources rather than custom command sources.
+- [viddy](https://github.com/sachaos/viddy) is a modern command watcher with history and diffing, but
+  without Sampler-style charts and panel layouts.
+
 ![sampler](https://user-images.githubusercontent.com/6069066/56404396-70b14d00-6234-11e9-93cd-54461bf40c96.gif)
 
 ## Why do I need it?
@@ -13,8 +32,7 @@ If there is a way to get a metric using a shell command, then it can be visualiz
 ## Installation
 
 The linked v1.1.0 release binaries predate the dependency updates in this source
-branch. Build this source tree or use the Docker build below to use the updated
-code; a new release is needed to refresh the published binaries.
+tree. The project is archived, so refreshed release binaries are not planned.
 
 ### macOS
 
